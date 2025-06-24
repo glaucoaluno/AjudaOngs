@@ -7,6 +7,7 @@ use App\Http\Controllers\ProdutoController;
 
 Route::middleware(['api'])->group(function () {
     Route::apiResource('doadores', DoadorController::class);
+    Route::get('/doadores/buscar/{cpf_cnpj}', [DoadorController::class, 'buscarPorCpfCnpj']);
     Route::apiResource('familias', FamiliaBeneficiadaController::class);
 
     Route::apiResource('doacoes', DoacaoController::class);

@@ -8,6 +8,11 @@ use Illuminate\Validation\ValidationException;
 
 class DoadorController extends Controller
 {
+    /**
+     * Retorna dados dos doadores.
+     * 
+     * @return JsonResponse json
+     */
     public function index(): JsonResponse
     {
         try {
@@ -25,6 +30,12 @@ class DoadorController extends Controller
         }
     }
 
+    /**
+     * Armazena um doador válido.
+     * 
+     * @param Request $request
+     * @return JsonResponse json
+     */
     public function store(Request $request): JsonResponse
     {
         try {
@@ -58,7 +69,13 @@ class DoadorController extends Controller
         }
     }
 
-    public function show($id): JsonResponse
+    /**
+     * Retorna um doador de acordo com o id especificado.
+     * 
+     * @param int $id
+     * @return JsonResponse json
+     */
+    public function show(int $id): JsonResponse
     {
         try {
             $doador = Doador::with(['doacoes.produtos'])->findOrFail($id);
@@ -74,7 +91,14 @@ class DoadorController extends Controller
         }
     }
 
-    public function update(Request $request, $id): JsonResponse
+    /**
+     * Atualiza o doador de acordo com o id especificado.
+     * 
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse json
+     */
+    public function update(Request $request, int $id): JsonResponse
     {
         try {
             $doador = Doador::findOrFail($id);
@@ -108,7 +132,13 @@ class DoadorController extends Controller
         }
     }
 
-    public function destroy($id): JsonResponse
+    /**
+     * Remove um doador pelo id.
+     * 
+     * @param int $id
+     * @return JsonResponse json
+     */
+    public function destroy(int $id): JsonResponse
     {
         try {
             $doador = Doador::findOrFail($id);
@@ -122,6 +152,41 @@ class DoadorController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Erro ao remover doador'
+            ], 500);
+        }
+    }
+
+    /**
+     * Busca doador por CPF/CNPJ.
+     * 
+     * @param string $cpfCnpj
+     * @return JsonResponse json
+     */
+    public function buscarPorCpfCnpj(string $cpfCnpj): JsonResponse
+    {
+        try {
+            // Remove formatação do CPF/CNPJ
+            $cpfCnpjLimpo = preg_replace('/\D/', '', $cpfCnpj);
+            
+            $doador = Doador::where('cpf_cnpj', $cpfCnpjLimpo)
+                            ->orWhere('cpf_cnpj', $cpfCnpj) // Caso esteja armazenado com formatação
+                            ->first();
+            
+            if (!$doador) {
+                return response()->json([
+                    'message' => 'Doador não encontrado'
+                ], 404);
+            }
+            
+            return response()->json([
+                'success' => true,
+                'data' => $doador
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao buscar doador: ' . $e->getMessage()
             ], 500);
         }
     }
