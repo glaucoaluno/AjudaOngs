@@ -1,0 +1,58 @@
+services:
+    # image project
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+        networks:
+            - laravel
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "8989:80"
+        volumes:
+
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - laravel
+
+    # db postgres
+    postgres:
+        image: postgres:17.4-alpine3.21
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: ${DB_DATABASE:-trabalho_ajuda_ongs}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres_bob_user_docker}
+            POSTGRES_USER: ${DB_USERNAME:-bob}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - laravel
+
+    # redis
+    redis:
+        image: redis:latest
+        networks:
+            - laravel
+
+volumes:
+    app:
+    nginx:
+    postgres_data:
+    redis:
+
+networks:
+    laravel:
+        driver: bridge
