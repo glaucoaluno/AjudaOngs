@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoadorController;
 use App\Http\Controllers\FamiliaBeneficiadaController;
@@ -15,18 +16,4 @@ Route::middleware(['api'])->group(function () {
 
     Route::get('produtos', [ProdutoController::class, 'index']);
     Route::get('produtos/disponiveis', [ProdutoController::class, 'disponiveisParaDoacao']);
-
-    Route::get('estatisticas', function() {
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'total_doadores' => \App\Models\Doador::count(),
-                'total_familias' => \App\Models\FamiliaBeneficiada::count(),
-                'total_doacoes' => \App\Models\DoacaoDoador::count(),
-                'doacoes_entregues' => \App\Models\DoacaoDoador::whereNotNull('data_entrega')->count(),
-                'doacoes_pendentes' => \App\Models\DoacaoDoador::whereNull('data_entrega')->count(),
-                'total_produtos' => \App\Models\Produto::count()
-            ]
-        ]);
-    });
 });
