@@ -21,3 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+API_DOCUMENTATION.md
+SETUP_INSTRUCTIONS.md
