@@ -169,12 +169,14 @@ class DoadorController extends Controller
             // Remove formatação do CPF/CNPJ
             $cpfCnpjLimpo = preg_replace('/\D/', '', $cpfCnpj);
             
-            $doador = Doador::where('cpf_cnpj', $cpfCnpjLimpo)
-                            ->orWhere('cpf_cnpj', $cpfCnpj) // Caso esteja armazenado com formatação
+            // Busca por email como alternativa (já que não temos CPF/CNPJ na tabela)
+            $doador = Doador::where('email', 'like', '%' . $cpfCnpj . '%')
+                            ->orWhere('nome', 'like', '%' . $cpfCnpj . '%')
                             ->first();
             
             if (!$doador) {
                 return response()->json([
+                    'success' => false,
                     'message' => 'Doador não encontrado'
                 ], 404);
             }
