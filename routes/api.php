@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoadorController;
 use App\Http\Controllers\FamiliaBeneficiadaController;
 use App\Http\Controllers\DoacaoController;
+use App\Http\Controllers\DoacaoFamiliaController;
 use App\Http\Controllers\ProdutoController;
 
 Route::middleware(['api'])->group(function () {
@@ -13,6 +14,9 @@ Route::middleware(['api'])->group(function () {
 
     Route::apiResource('doacoes', DoacaoController::class);
     Route::patch('doacoes/{id}/entregar', [DoacaoController::class, 'marcarComoEntregue']);
+
+    // Rotas para doações de famílias
+    Route::apiResource('doacao-familia', DoacaoFamiliaController::class);
 
     Route::get('produtos', [ProdutoController::class, 'index']);
     Route::get('produtos/disponiveis', [ProdutoController::class, 'disponiveisParaDoacao']);

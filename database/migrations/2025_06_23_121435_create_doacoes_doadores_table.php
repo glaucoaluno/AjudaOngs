@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('doacoes_doadores', function (Blueprint $table) {
             $table->id('id_doacao');
             $table->dateTime('data_doacao');
+            $table->dateTime('data_entrada');
             $table->dateTime('data_entrega')->nullable();
             $table->foreignId('id_doador')->constrained('doadores', 'id')->onDelete('cascade');
             $table->timestamps();
