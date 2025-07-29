@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Doador;
 use App\Models\FamiliaBeneficiada;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,8 +51,16 @@ class DatabaseSeeder extends Seeder
         // Cria doadores específicos de Campinas
         Doador::factory(3)->fromCity('Campinas', 'SP')->create();
 
-        $this->call([
-            DoadorSeeder::class
-        ]);
+        User::updateOrCreate(
+            [ 'email' => 'admin@admin.com' ],
+            [
+                'name' => 'admin',
+                'password' => Hash::make('admin1234'),
+            ]
+        );
+
+        // $this->call([
+        //     DoadorSeeder::class
+        // ]);
     }
-}
+}w
