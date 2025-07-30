@@ -9,6 +9,11 @@ use Illuminate\Validation\ValidationException;
 
 class DoacaoFamiliaController extends Controller
 {
+    /**
+     * Lista todas as doações para famílias beneficiadas
+     * 
+     * @return JsonResponse Lista de doações com dados das famílias e produtos
+     */
     public function index(): JsonResponse
     {
         try {
@@ -26,6 +31,12 @@ class DoacaoFamiliaController extends Controller
         }
     }
 
+    /**
+     * Registra uma nova doação para uma família beneficiada
+     * 
+     * @param Request $request Requisição contendo dados da doação
+     * @return JsonResponse Dados da doação criada ou erro de validação
+     */
     public function store(Request $request): JsonResponse
     {
         try {
@@ -60,7 +71,13 @@ class DoacaoFamiliaController extends Controller
         }
     }
 
-    public function show($id): JsonResponse
+    /**
+     * Exibe uma doação específica para família
+     * 
+     * @param int $id ID da doação
+     * @return JsonResponse Dados da doação ou erro se não encontrada
+     */
+    public function show(int $id): JsonResponse
     {
         try {
             $doacao = DoacaoFamilia::with(['familia', 'produto'])->findOrFail($id);
@@ -76,7 +93,14 @@ class DoacaoFamiliaController extends Controller
         }
     }
 
-    public function update(Request $request, $id): JsonResponse
+    /**
+     * Atualiza uma doação para família existente
+     * 
+     * @param Request $request Requisição contendo dados para atualização
+     * @param int $id ID da doação
+     * @return JsonResponse Dados da doação atualizada ou erro
+     */
+    public function update(Request $request, int $id): JsonResponse
     {
         try {
             $doacao = DoacaoFamilia::findOrFail($id);
@@ -111,7 +135,13 @@ class DoacaoFamiliaController extends Controller
         }
     }
 
-    public function destroy($id): JsonResponse
+    /**
+     * Remove uma doação para família
+     * 
+     * @param int $id ID da doação
+     * @return JsonResponse Confirmação de remoção ou erro
+     */
+    public function destroy(int $id): JsonResponse
     {
         try {
             $doacao = DoacaoFamilia::findOrFail($id);

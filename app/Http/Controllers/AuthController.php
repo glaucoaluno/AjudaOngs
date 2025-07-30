@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * Autentica um usuário e retorna um token de acesso
+     * 
+     * @param Request $request Requisição contendo email e senha
+     * @return JsonResponse Resposta JSON com token de acesso ou erro de autenticação
+     */
+    public function login(Request $request): JsonResponse
     {
         $request->validate([
             'email' => 'required|email',

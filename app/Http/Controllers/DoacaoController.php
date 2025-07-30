@@ -11,6 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class DoacaoController extends Controller
 {
+    /**
+     * Lista todas as doações de doadores
+     * 
+     * @return JsonResponse Lista de doações com dados dos doadores e produtos
+     */
     public function index(): JsonResponse
     {
         try {
@@ -28,6 +33,12 @@ class DoacaoController extends Controller
         }
     }
 
+    /**
+     * Registra uma nova doação com produtos
+     * 
+     * @param Request $request Requisição contendo dados da doação e produtos
+     * @return JsonResponse Dados da doação criada ou erro de validação
+     */
     public function store(Request $request): JsonResponse
     {
         try {
@@ -91,7 +102,13 @@ class DoacaoController extends Controller
         }
     }
 
-    public function show($id): JsonResponse
+    /**
+     * Exibe uma doação específica
+     * 
+     * @param int $id ID da doação
+     * @return JsonResponse Dados da doação ou erro se não encontrada
+     */
+    public function show(int $id): JsonResponse
     {
         try {
             $doacao = DoacaoDoador::with(['doador', 'produtos'])->findOrFail($id);
@@ -107,7 +124,13 @@ class DoacaoController extends Controller
         }
     }
 
-    public function marcarComoEntregue($id): JsonResponse
+    /**
+     * Marca uma doação como entregue
+     * 
+     * @param int $id ID da doação
+     * @return JsonResponse Confirmação da atualização ou erro
+     */
+    public function marcarComoEntregue(int $id): JsonResponse
     {
         try {
             $doacao = DoacaoDoador::findOrFail($id);

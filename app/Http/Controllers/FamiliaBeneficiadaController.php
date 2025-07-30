@@ -9,6 +9,11 @@ use Illuminate\Validation\ValidationException;
 
 class FamiliaBeneficiadaController extends Controller
 {
+    /**
+     * Lista todas as famílias beneficiadas
+     * 
+     * @return JsonResponse Lista de famílias com suas doações recebidas
+     */
     public function index(): JsonResponse
     {
         try {
@@ -26,6 +31,12 @@ class FamiliaBeneficiadaController extends Controller
         }
     }
 
+    /**
+     * Cadastra uma nova família beneficiada
+     * 
+     * @param Request $request Requisição contendo dados da família
+     * @return JsonResponse Dados da família criada ou erro de validação
+     */
     public function store(Request $request): JsonResponse
     {
         try {
@@ -59,7 +70,13 @@ class FamiliaBeneficiadaController extends Controller
         }
     }
 
-    public function show($id): JsonResponse
+    /**
+     * Exibe uma família beneficiada específica
+     * 
+     * @param int $id ID da família
+     * @return JsonResponse Dados da família ou erro se não encontrada
+     */
+    public function show(int $id): JsonResponse
     {
         try {
             $familia = FamiliaBeneficiada::with(['doacoesRecebidas.produto'])->findOrFail($id);
@@ -75,7 +92,14 @@ class FamiliaBeneficiadaController extends Controller
         }
     }
 
-    public function update(Request $request, $id): JsonResponse
+    /**
+     * Atualiza uma família beneficiada existente
+     * 
+     * @param Request $request Requisição contendo dados para atualização
+     * @param int $id ID da família
+     * @return JsonResponse Dados da família atualizada ou erro
+     */
+    public function update(Request $request, int $id): JsonResponse
     {
         try {
             $familia = FamiliaBeneficiada::findOrFail($id);
@@ -109,7 +133,13 @@ class FamiliaBeneficiadaController extends Controller
         }
     }
 
-    public function destroy($id): JsonResponse
+    /**
+     * Remove uma família beneficiada
+     * 
+     * @param int $id ID da família
+     * @return JsonResponse Confirmação de remoção ou erro
+     */
+    public function destroy(int $id): JsonResponse
     {
         try {
             $familia = FamiliaBeneficiada::findOrFail($id);

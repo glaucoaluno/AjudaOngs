@@ -8,6 +8,11 @@ use Illuminate\Http\JsonResponse;
 
 class ProdutoController extends Controller
 {
+    /**
+     * Lista todos os produtos cadastrados
+     * 
+     * @return JsonResponse Lista de produtos com dados das doações e doadores
+     */
     public function index(): JsonResponse
     {
         try {
@@ -25,6 +30,11 @@ class ProdutoController extends Controller
         }
     }
 
+    /**
+     * Lista produtos disponíveis para doação (com data de entrega definida)
+     * 
+     * @return JsonResponse Lista de produtos disponíveis para doação
+     */
     public function disponiveisParaDoacao(): JsonResponse
     {
         try {
