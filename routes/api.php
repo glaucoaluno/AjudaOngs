@@ -6,6 +6,10 @@ use App\Http\Controllers\FamiliaBeneficiadaController;
 use App\Http\Controllers\DoacaoController;
 use App\Http\Controllers\DoacaoFamiliaController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\AuthController;
+
+// Rota de login fora do middleware
+Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware(['api'])->group(function () {
     Route::apiResource('doadores', DoadorController::class);
@@ -17,6 +21,7 @@ Route::middleware(['api'])->group(function () {
 
     // Rotas para doações de famílias
     Route::apiResource('doacao-familia', DoacaoFamiliaController::class);
+    Route::get('doacoes-familias', [DoacaoFamiliaController::class, 'index']);
 
     Route::get('produtos', [ProdutoController::class, 'index']);
     Route::get('produtos/disponiveis', [ProdutoController::class, 'disponiveisParaDoacao']);
