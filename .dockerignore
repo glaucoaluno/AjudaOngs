@@ -1,0 +1,47 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Laravel
+/vendor
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Tests
+/tests
+phpunit.xml
+coverage
+
+# Logs
+*.log
+storage/logs
+
+# Cache
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+
+# Temporary files
+*.tmp
+*.temp 

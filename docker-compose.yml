@@ -32,8 +32,11 @@ services:
             POSTGRES_DB: ${DB_DATABASE:-trabalho_ajuda_ongs}
             POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres_bob_user_docker}
             POSTGRES_USER: ${DB_USERNAME:-bob}
+            # Variáveis para banco de teste
+            POSTGRES_MULTIPLE_DATABASES: ${DB_DATABASE:-trabalho_ajuda_ongs},ajudaongs_test
         volumes:
             - postgres_data:/var/lib/postgresql/data
+            - ./docker/init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
         ports:
             - "5432:5432"
         networks:

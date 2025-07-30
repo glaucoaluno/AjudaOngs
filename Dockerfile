@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libpq-dev \
+    postgresql-client \
     zip \
     unzip
 
@@ -39,4 +40,15 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
+# Copy initialization scripts
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY docker/init-db.sh /usr/local/bin/init-db.sh
+
+# Make scripts executable
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/init-db.sh
+
 USER $user
+
+# Set entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php-fpm"]
