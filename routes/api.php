@@ -16,6 +16,7 @@ Route::middleware(['api'])->group(function () {
     Route::apiResource('familias', FamiliaBeneficiadaController::class);
 
     Route::apiResource('doacoes', DoacaoController::class);
+    // TODO: implementar consumo de rota no front.
     Route::patch('doacoes/{id}/entregar', [DoacaoController::class, 'marcarComoEntregue']);
 
     // Rotas para doações de famílias
