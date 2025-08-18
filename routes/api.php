@@ -24,5 +24,4 @@ Route::middleware(['api'])->group(function () {
     Route::get('doacoes-familias', [DoacaoFamiliaController::class, 'index']);
 
     Route::get('produtos', [ProdutoController::class, 'index']);
-    Route::get('produtos/disponiveis', [ProdutoController::class, 'disponiveisParaDoacao']);
 });
