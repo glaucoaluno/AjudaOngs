@@ -69,9 +69,5 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('admin1234'),
             ]
         );
-
-        // $this->call([
-        //     DoadorSeeder::class
-        // ]);
     }
 } 
