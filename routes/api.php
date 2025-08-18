@@ -13,10 +13,10 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware(['api'])->group(function () {
     Route::apiResource('doadores', DoadorController::class);
-    Route::get('/doadores/buscar/{cpf_cnpj}', [DoadorController::class, 'buscarPorCpfCnpj']);
     Route::apiResource('familias', FamiliaBeneficiadaController::class);
 
     Route::apiResource('doacoes', DoacaoController::class);
+    // TODO: implementar consumo de rota no front.
     Route::patch('doacoes/{id}/entregar', [DoacaoController::class, 'marcarComoEntregue']);
 
     // Rotas para doações de famílias

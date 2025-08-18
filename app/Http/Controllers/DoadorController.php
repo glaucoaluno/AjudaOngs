@@ -156,41 +156,4 @@ class DoadorController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Busca doador por CPF/CNPJ.
-     * 
-     * @param string $cpfCnpj
-     * @return JsonResponse json
-     */
-    public function buscarPorCpfCnpj(string $cpfCnpj): JsonResponse
-    {
-        try {
-            // Remove formatação do CPF/CNPJ
-            $cpfCnpjLimpo = preg_replace('/\D/', '', $cpfCnpj);
-            
-            // Busca por email como alternativa (já que não temos CPF/CNPJ na tabela)
-            $doador = Doador::where('email', 'like', '%' . $cpfCnpj . '%')
-                            ->orWhere('nome', 'like', '%' . $cpfCnpj . '%')
-                            ->first();
-            
-            if (!$doador) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Doador não encontrado'
-                ], 404);
-            }
-            
-            return response()->json([
-                'success' => true,
-                'data' => $doador
-            ]);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro ao buscar doador: ' . $e->getMessage()
-            ], 500);
-        }
-    }
 }
