@@ -12,7 +12,7 @@ Sistema completo para auxílio no gerenciamento de doações para ONGs em Campin
 ## 🚀 Deploy Rápido
 
 ### Pré-requisitos
-- Docker e Docker Compose instalados
+- PHP e PostgreSQL
 - Git
 
 ### Deploy Automático
@@ -33,8 +33,6 @@ cd AjudaOngs
 
 ### Executar Testes
 ```bash
-# Testes no Docker (recomendado)
-./scripts/run-tests-docker.sh
 
 # Testes locais
 ./scripts/run-tests.sh
@@ -63,7 +61,6 @@ cd AjudaOngs
 - **Servidor**: Nginx
 
 ### Infraestrutura
-- **Containerização**: Docker & Docker Compose
 - **Servidor Web**: Nginx
 - **PHP**: PHP-FPM 8.3
 
@@ -73,18 +70,14 @@ cd AjudaOngs
 AjudaOngs/
 ├── app/                    # Código Laravel
 ├── database/              # Migrações e Seeders
-├── docker/                # Configurações Docker
 ├── scripts/               # Scripts de automação
 │   ├── deploy.sh          # Deploy completo
 │   ├── run-tests.sh       # Testes locais
-│   ├── run-tests-docker.sh # Testes no Docker
 │   ├── setup-test-db.sh   # Configuração banco teste
 │   ├── clean-test-db.sh   # Limpeza banco teste
 │   ├── TESTES_README.md   # Documentação de testes
-│   └── DOCKER_README.md   # Documentação Docker
 ├── tests/                 # Testes automatizados
 ├── tcfinal/              # Frontend (HTML/CSS/JS)
-├── docker-compose.yml    # Configuração Docker
 └── README.md            # Este arquivo
 ```
 
@@ -100,35 +93,22 @@ AjudaOngs/
 
 ## 🔧 Comandos Úteis
 
-### Docker
-```bash
-# Ver status dos containers
-docker compose ps
-
-# Ver logs
-docker compose logs -f app
-
-# Acessar container
-docker compose exec app bash
-```
-
 ### Laravel
 ```bash
 # Executar migrações
-docker compose exec app php artisan migrate
+php artisan migrate
 
 # Executar seeders
-docker compose exec app php artisan db:seed
+php artisan db:seed
 
 # Limpar cache
-docker compose exec app php artisan cache:clear
+php artisan cache:clear
 ```
 
 ## 📚 Documentação
 
 - **Scripts e Automação**: `scripts/README.md`
 - **Sistema de Testes**: `scripts/TESTES_README.md`
-- **Configuração Docker**: `scripts/DOCKER_README.md`
 
 ## 🧪 Status dos Testes
 
