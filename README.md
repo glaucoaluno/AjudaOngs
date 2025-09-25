@@ -26,8 +26,8 @@ cd AjudaOngs
 ```
 
 ### URLs de Acesso
-- **API**: http://localhost:8989/api
-- **Admin**: http://localhost:8989/Administrativo
+- **API**: http://localhost:8000/api
+- **Admin**: http://localhost:8000/Administrativo
 
 ## 🧪 Testes
 
