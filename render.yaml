@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: ajuda-ongs
+    runtime: docker
+    dockerfilePath: ./Dockerfile.render
+    dockerContext: .
+    preDeployCommand: |
+      php artisan key:generate --force || true
+      php artisan storage:link || true
+    startCommand: |
+      php -d variables_order=EGPCS -S 0.0.0.0:$PORT -t public
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_DATABASE
+        value: trabalho_ajuda_ongs
