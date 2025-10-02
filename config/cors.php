@@ -3,7 +3,7 @@
 return [
     'paths' => ['/api/*', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    'allowed_origins' => ['https://tcfinal-development.up.railway.app'],
+    'allowed_origins' => ['https://sistema-doacoes.up.railway.app'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => [''],
     'exposed_headers' => [],
