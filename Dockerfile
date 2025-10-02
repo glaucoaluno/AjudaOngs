@@ -1,43 +1,38 @@
-FROM php:8.3-fpm
-
-# set your user name, ex: user=carlos
-ARG user=neto
-ARG uid=1000
+FROM php:8.3-cli
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
+    unzip \
     libpq-dev \
-    postgresql-client \
-    zip \
-    unzip
+    libonig-dev \
+    libzip-dev \
+  && rm -rf /var/lib/apt/lists/*
 
-    
-# Install PHP extensions
-RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd sockets
+# Install PHP extensions used by Laravel
+RUN docker-php-ext-install pdo_pgsql mbstring bcmath exif pcntl sockets
 
-# Configure postgres
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-    
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Get latest Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$users
-
-# Set working directory
 WORKDIR /var/www
 
-# Copy custom configurations PHP
-COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+# Copy application files
+COPY . /var/www
 
-USER $user
+# Install PHP dependencies for production
+RUN composer install --no-dev --prefer-dist --optimize-autoloader \
+  && php artisan config:clear || true \
+  && php artisan route:clear || true \
+  && php artisan view:clear || true
+
+# Default port used by Render is provided in $PORT
+ENV PORT=8000
+
+# Hint Render about the listening port
+EXPOSE 8000
+
+# Pre-start tasks and start Laravel using PHP built-in server
+CMD ["sh", "-c", "mkdir -p database && touch database/database.sqlite; if [ ! -f .env ]; then cp .env.example .env || true; fi; if [ -z \"$APP_KEY\" ] || [ \"$APP_KEY\" = \"\" ]; then php artisan key:generate --force || true; fi; php artisan storage:link || true; php -d variables_order=EGPCS -S 0.0.0.0:${PORT:-8000} -t public"]
+
+
