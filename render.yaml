@@ -15,6 +15,6 @@ services:
       - key: APP_KEY
         generateValue: true
       - key: DB_CONNECTION
-        value: pgsql
+        value: sqlite
       - key: DB_DATABASE
-        value: trabalho_ajuda_ongs
+        value: /var/www/database/database.sqlite
