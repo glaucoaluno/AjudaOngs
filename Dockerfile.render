@@ -29,6 +29,9 @@ RUN composer install --no-dev --prefer-dist --optimize-autoloader \
 # Default port used by Render is provided in $PORT
 ENV PORT=8080
 
+# Hint Render about the listening port
+EXPOSE 8080
+
 # Pre-start tasks and start Laravel using PHP built-in server
 CMD ["sh", "-c", "mkdir -p database && touch database/database.sqlite; if [ ! -f .env ]; then cp .env.example .env || true; fi; if [ -z \"$APP_KEY\" ] || [ \"$APP_KEY\" = \"\" ]; then php artisan key:generate --force || true; fi; php artisan storage:link || true; php -d variables_order=EGPCS -S 0.0.0.0:${PORT:-8080} -t public"]
 

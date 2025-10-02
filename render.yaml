@@ -2,7 +2,7 @@ services:
   - type: web
     name: ajuda-ongs
     runtime: docker
-    dockerfilePath: ./Dockerfile.render
+    dockerfilePath: Dockerfile.render
     dockerContext: .
     healthCheckPath: /
     envVars:
