@@ -21,7 +21,7 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install PHP dependencies for production
-RUN composer install --no-dev --prefer-dist --optimize-autoloader \
+RUN composer install --prefer-dist --optimize-autoloader \
   && php artisan config:clear || true \
   && php artisan route:clear || true \
   && php artisan view:clear || true
