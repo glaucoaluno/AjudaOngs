@@ -4,11 +4,7 @@ services:
     runtime: docker
     dockerfilePath: ./Dockerfile.render
     dockerContext: .
-    preDeployCommand: |
-      php artisan key:generate --force || true
-      php artisan storage:link || true
-    startCommand: |
-      php artisan serve --host=0.0.0.0 --port=$PORT
+    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     healthCheckPath: /
     envVars:
       - key: APP_ENV
