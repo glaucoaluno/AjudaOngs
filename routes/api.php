@@ -23,5 +23,6 @@ Route::middleware(['api'])->group(function () {
     Route::apiResource('doacao-familia', DoacaoFamiliaController::class);
     Route::get('doacoes-familias', [DoacaoFamiliaController::class, 'index']);
 
-    Route::get('produtos', [ProdutoController::class, 'index']);
+    // Rotas completas para produtos (inclui show: GET /produtos/{id})
+    Route::apiResource('produtos', ProdutoController::class);
 });

@@ -31,6 +31,29 @@ class ProdutoController extends Controller
     }
 
     /**
+     * Retorna um produto específico por ID
+     * 
+     * @param int $id ID do produto
+     * @return JsonResponse Dados do produto
+     */
+    public function show($id): JsonResponse
+    {
+        try {
+            $produto = Produto::with(['doacao.doador'])->findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'data' => $produto
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Produto não encontrado',
+                'error' => $e->getMessage()
+            ], 404);
+        }
+    }
+
+    /**
      * Lista produtos disponíveis para doação (com data de entrega definida)
      * 
      * @return JsonResponse Lista de produtos disponíveis para doação
