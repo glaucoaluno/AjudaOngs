@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('descricao');
             $table->foreignId('doacao_id_doacao')->constrained('doacoes_doadores', 'id_doacao')->onDelete('cascade');
             $table->date('data');
+            $table->boolean('ativo')->default(true)->after('data');
             $table->timestamps();
         });
     }
